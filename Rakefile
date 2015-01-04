@@ -21,7 +21,7 @@ task :spec  => TESTED_MODULES.map {|m| "spec:#{m}"}
 namespace :librarian do
   desc "Instala os módulos usando o Librarian Puppet"
   task :install do
-    Dir.chdir("librarian") do
+    Dir.chdir('librarian') do
       sh "librarian-puppet install"
     end
   end
