@@ -26,7 +26,7 @@ class loja_virtual::web {
      location    => "http://192.168.33.13/",
      release     => "devopspkgs",
      repos       => "main",
-     key         => "F81DF2CA",
+     key         => "38FCE4B5",
      key_source  => "http://192.168.33.13/devopspkgs.gpg",
      include_src => false,
    }
