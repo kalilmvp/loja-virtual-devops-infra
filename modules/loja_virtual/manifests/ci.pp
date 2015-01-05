@@ -42,7 +42,9 @@ class loja_virtual::ci inherits loja_virtual {
 
 	$job_structure = [
      "/var/lib/jenkins/jobs/",
-     "/var/lib/jenkins/jobs/loja-virtual-devops"
+     "/var/lib/jenkins/jobs/loja-virtual-devops",
+		 "/var/lib/jenkins/jobs/loja-virtual-devops-infra",
+		 "/var/lib/jenkins/jobs/Deploy-Production",
    ]
    $git_repository = 'https://github.com/kalilmvp/loja-virtual-devops.git'
    $git_poll_interval = '* * * * *'
@@ -62,10 +64,28 @@ class loja_virtual::ci inherits loja_virtual {
      mode    => 0644,
      owner   => "jenkins",
      group   => "jenkins",
-     content => template("loja_virtual/config.xml"),
+     content => template("loja_virtual/web/config.xml"),
      require => File[$job_structure],
      notify  => Service["jenkins"],
    }
+
+	file { "${job_structure[2]}/config.xml":
+		mode    => 0644,
+		owner   => "jenkins",
+		group   => "jenkins",
+		content => template("loja_virtual/infra/config.xml"),
+		require => File[$job_structure],
+		notify  => Service["jenkins"],
+	}
+
+	file { "${job_structure[3]}/config.xml":
+		mode    => 0644,
+		owner   => "jenkins",
+		group   => "jenkins",
+		content => template("loja_virtual/production/config.xml"),
+		require => File[$job_structure],
+		notify  => Service["jenkins"],
+	}
 
 	 class { "loja_virtual::repo":
 		basedir	=>	$basedir,
